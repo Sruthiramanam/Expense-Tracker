@@ -7,67 +7,103 @@ const amount = document.getElementById("amount");
 const btn = document.getElementById("btn");
 
 let transactions =
-JSON.parse(localStorage.getItem("transactions")) || [];
+    JSON.parse(localStorage.getItem("transactions")) || [];
 
-function updateUI(){
+// Update the UI
 
-    list.innerHTML="";
+function updateUI() {
+    list.innerHTML = "";
 
     let total = 0;
     let incomeTotal = 0;
     let expenseTotal = 0;
 
-    transactions.forEach((item,index)=>{
+    transactions.forEach((item, index) => {
+        const li = document.createElement("li");
 
-        const li=document.createElement("li");
+        const description = document.createElement("span");
+        description.textContent = item.text;
 
-        li.innerHTML=`
-        ${item.text}
-        <span>$${item.amount}</span>
-        <button class="delete" onclick="deleteTransaction(${index})">X</button>
-        `;
+        const amountDisplay = document.createElement("span");
+        amountDisplay.textContent =
+            (item.amount < 0 ? "-$" : "$") +
+            Math.abs(item.amount).toFixed(2);
 
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete";
+        deleteButton.textContent = "X";
+        deleteButton.type = "button";
+
+        deleteButton.addEventListener("click", () => {
+            deleteTransaction(index);
+        });
+
+        li.append(description, amountDisplay, deleteButton);
         list.appendChild(li);
 
         total += item.amount;
 
-        if(item.amount>0)
+        if (item.amount > 0) {
             incomeTotal += item.amount;
-        else
+        } else {
             expenseTotal += item.amount;
+        }
     });
 
-    balance.innerText="$"+total.toFixed(2);
-    income.innerText="$"+incomeTotal.toFixed(2);
-    expense.innerText="$"+Math.abs(expenseTotal).toFixed(2);
+    balance.textContent = "$" + total.toFixed(2);
+    income.textContent = "$" + incomeTotal.toFixed(2);
+    expense.textContent = "$" + Math.abs(expenseTotal).toFixed(2);
 
-    localStorage.setItem("transactions",
-    JSON.stringify(transactions));
+    localStorage.setItem(
+        "transactions",
+        JSON.stringify(transactions)
+    );
 }
 
-btn.addEventListener("click",()=>{
+// Add a transaction
 
-    if(text.value=="" || amount.value==""){
-        alert("Please fill all fields");
+btn.addEventListener("click", () => {
+    const description = text.value.trim();
+    const transactionAmount = Number(amount.value);
+
+    if (description === "") {
+        alert("Please enter a transaction description.");
+        text.focus();
+        return;
+    }
+
+    if (
+        amount.value.trim() === "" ||
+        !Number.isFinite(transactionAmount) ||
+        transactionAmount === 0
+    ) {
+        alert("Please enter a valid amount other than zero.");
+        amount.focus();
         return;
     }
 
     transactions.push({
-        text:text.value,
-        amount:Number(amount.value)
+        text: description,
+        amount: transactionAmount
     });
 
-    text.value="";
-    amount.value="";
+    text.value = "";
+    amount.value = "";
 
     updateUI();
 });
 
-function deleteTransaction(index){
+// Delete a transaction
 
-    transactions.splice(index,1);
+function deleteTransaction(index) {
+    if (index < 0 || index >= transactions.length) {
+        return;
+    }
 
+    transactions.splice(index, 1);
     updateUI();
 }
+
+// Display saved transactions on page load
 
 updateUI();
