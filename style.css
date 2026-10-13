@@ -1,89 +1,128 @@
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-body{
-    background:#f4f4f4;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+body {
+    background: #5262a1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 30px 15px;
 }
 
-.container{
-    background:white;
-    padding:20px;
-    width:350px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,0.2);
+.container {
+    background: white;
+    padding: 20px;
+    width: 100%;
+    max-width: 350px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(35, 43, 101, 0.2);
 }
 
-.balance{
-    text-align:center;
-    margin:20px 0;
+.balance {
+    text-align: center;
+    margin: 20px 0;
+    overflow-wrap: anywhere;
 }
 
-.summary{
-    display:flex;
-    justify-content:space-between;
-    background:#eee;
-    padding:10px;
-    margin-bottom:20px;
+.summary {
+    display: flex;
+    justify-content: space-between;
+    background: #eee;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    gap: 10px;
 }
 
-.summary div{
-    width:45%;
-    text-align:center;
+.summary div {
+    width: 45%;
+    text-align: center;
+    overflow-wrap: anywhere;
 }
 
-#income{
-    color:green;
+#income {
+    color: green;
 }
 
-#expense{
-    color:red;
+#expense {
+    color: red;
 }
 
-input{
-    width:100%;
-    padding:10px;
-    margin:10px 0;
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-button{
-    width:100%;
-    padding:10px;
-    background:#007BFF;
-    color:white;
-    border:none;
-    cursor:pointer;
+button {
+    width: 100%;
+    padding: 10px;
+    background: #007BFF;
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-button:hover{
-    background:#0056b3;
+button:hover {
+    background: #0056b3;
 }
 
-ul{
-    list-style:none;
-    margin-top:20px;
+button:focus-visible,
+input:focus-visible {
+    outline: 2px solid #0056b3;
+    outline-offset: 2px;
 }
 
-li{
-    background:#eee;
-    margin:10px 0;
-    padding:10px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
+ul {
+    list-style: none;
+    margin-top: 20px;
 }
 
-.delete{
-    background:red;
-    color:white;
-    border:none;
-    padding:5px 10px;
-    cursor:pointer;
+li {
+    background: #eee;
+    margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    border-radius: 5px;
+    overflow-wrap: anywhere;
+}
+
+li span {
+    min-width: 0;
+}
+
+.delete {
+    background: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    width: auto;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.delete:hover {
+    background: darkred;
+}
+
+@media (max-width: 380px) {
+    .container {
+        padding: 15px;
+    }
+
+    li {
+        padding: 8px;
+        gap: 5px;
+    }
 }
